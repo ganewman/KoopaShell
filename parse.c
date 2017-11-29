@@ -8,7 +8,7 @@ char ** parseCommand(char * command){
   int i = 0;
   char space[] = " ";
   int num_args = countArgs(command);
-  printf("%d\n", num_args);
+  // printf("%d\n", num_args);
   char ** args = calloc(num_args + 1, sizeof(char *));
   //  printf("%s\n", command);
   while(command){
