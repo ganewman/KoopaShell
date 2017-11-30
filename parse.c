@@ -15,11 +15,6 @@ char ** parseCommand(char * command){
     args[i] = strsep(&command, space);
     i++;
   }
- char * newline = strchr(args[num_args - 1], '\n');
- *newline = 0;
-  args[num_args] = 0;
-  return args;
-
 }
 
 
@@ -34,5 +29,17 @@ int countArgs(char * i){
     }
   }
   return num_args;
+
+}
+
+char * stripSpaces(char * s){
+  s = strsep(&s, "\n");
+  for(s; *s == ' '; s++); // remove spaces from front by returning a pointer to the first index without a space
+  int size = strlen(s);
+  char * end;
+  for(end = s + size - 1; *end == ' '; end--);
+  // start at index before terminating null (size - 2) and move backward until spaces end
+  *(end + 1) = 0;
+  return s;
 
 }
