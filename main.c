@@ -9,17 +9,15 @@ int runSequence(char *);
 int main(){
   while(1){
     char s[256];
-    printf("KoopaShell$ "); // FIXME: print command prompt instead
+    printf("KoopaShell$ ");
     fgets(s, sizeof(s), stdin);
  
     /* int i;
-         for (i = 0; args[i]; i++){
-      printf("%s\n", args[i]);
-      }*/
-    //    runSequence(s);
+       for (i = 0; args[i]; i++){
+       printf("%s\n", args[i]);
+       }*/
     char * stripped = stripSpaces(s);
-    printf("%p\n", stripped);
-    printf("[%s]\n", stripped);
+    runSequence(stripped);
   }
   return 0;
 }
@@ -32,11 +30,8 @@ int runSequence(char * block){
   }
   else {
     char * command = strsep(&block, ";");
-    printf("successfully separated first command\n");
-    printf("[%s]\n", command);
     char ** args = parseCommand(command);
-    printf("running command...\n");
     runCommand(args);
     runSequence(block);
-	 }
+  }
 }
