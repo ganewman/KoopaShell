@@ -12,11 +12,12 @@ char ** parseCommand(char * command){
   char ** args = calloc(num_args + 1, sizeof(char *));
   //  printf("%s\n", command);
   command = stripSpaces(command);
+  //  printf("[%s]\n", command);
   while(command){
     args[i] = strsep(&command, space);
-    printf("[%s]\n", command);
+    //   printf("[%s]\n", command);
     command = stripSpaces(command);
-    printf("[%s]\n", command);
+    //   printf("[%s]\n", command);
     i++;
   }
   return args;
@@ -38,6 +39,9 @@ int countArgs(char * i){
 }
 
 char * stripSpaces(char * s){
+  if (!s){
+    return s;
+  }
   s = strsep(&s, "\n");
   for(s; *s == ' '; s++); // remove spaces from front by returning a pointer to the first index without a space
   int size = strlen(s);
