@@ -1,8 +1,11 @@
+/* 
+
+ */
 int runCommand(char **);
 
 int runRedir(char **);
 
-int runPipe(char **);
+int runPipe(char *);
 
 int hasRedir(char **);
 

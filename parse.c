@@ -3,10 +3,14 @@
 #include <unistd.h>
 #include <string.h>
 #include "parse.h"
+#include "command.h"
 
 char ** parseCommand(char * command){
   int i = 0;
   char space[] = " ";
+  if (index(command, '|')){
+    runPipe(command);
+  }
   int num_args = countArgs(command);
   char ** args = calloc(num_args + 1, sizeof(char *));
   command = stripSpaces(command);
