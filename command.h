@@ -9,3 +9,5 @@ int hasRedir(char **);
 int hasPipe(char **);
 
 int forkRun(char **);
+
+int runSequence(char *);

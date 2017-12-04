@@ -5,7 +5,6 @@
 #include "parse.h"
 #include "command.h"
 
-int runSequence(char *);
 
 int main(){
   while(1){
@@ -24,16 +23,3 @@ int main(){
   return 0;
 }
 
-
-
-int runSequence(char * block){
-  if (! block){
-    return 0;
-  }
-  else {
-    char * command = strsep(&block, ";");
-    char ** args = parseCommand(command);
-    runCommand(args);
-    runSequence(block);
-  }
-}

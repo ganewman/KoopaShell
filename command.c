@@ -33,6 +33,18 @@ int runCommand(char ** args){
   }
 }
 
+int runSequence(char * block){
+  if (! block){
+    return 0;
+  }
+  else {
+    char * command = strsep(&block, ";");
+    char ** args = parseCommand(command);
+    runCommand(args);
+    runSequence(block);
+  }
+}
+
 
 int runRedir(char ** args){
   int i = hasRedir(args);
