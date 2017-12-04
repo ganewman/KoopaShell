@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "parse.h"
 #include "command.h"
 
@@ -9,7 +10,8 @@ int runSequence(char *);
 int main(){
   while(1){
     char s[256];
-    printf("KoopaShell$ ");
+    char path[256];
+    printf("%s$ ", getcwd(path, 256));
     fgets(s, sizeof(s), stdin);
  
     /* int i;

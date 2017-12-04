@@ -8,16 +8,11 @@ char ** parseCommand(char * command){
   int i = 0;
   char space[] = " ";
   int num_args = countArgs(command);
-  // printf("%d\n", num_args);
   char ** args = calloc(num_args + 1, sizeof(char *));
-  //  printf("%s\n", command);
   command = stripSpaces(command);
-  //  printf("[%s]\n", command);
   while(command){
-    args[i] = strsep(&command, space);
-    //   printf("[%s]\n", command);
+    args[i] = strsep(&command, " ");
     command = stripSpaces(command);
-    //   printf("[%s]\n", command);
     i++;
   }
   return args;
@@ -52,3 +47,6 @@ char * stripSpaces(char * s){
   return s;
 
 }
+
+
+
