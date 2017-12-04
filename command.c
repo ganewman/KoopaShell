@@ -9,6 +9,15 @@
 #include "command.h"
 #include "parse.h"
 
+/* ==== runCommand =========
+   Arguments: accepts an array char pointers (strings)
+
+   Returns: an int indicating exit status
+
+   Accepts an array of command line arguments, which it will fork and execute as necessary.
+
+   ========================*/
+
 int runCommand(char ** args){
   int i;
   
@@ -30,6 +39,15 @@ int runCommand(char ** args){
   }
 }
 
+/* ==== runSequence =========
+   Arguments: accepts a char pointer (string) 
+
+   Returns: an int indicating exit status
+
+   Accepts command line input in the form of a string. It will split on the first semicolon (if any), parse and run the preceding command, and continue recursively in this manner until all commands have been executed.
+
+   ========================*/
+
 int runSequence(char * block){
   if (! block){
     return 0;
@@ -42,6 +60,14 @@ int runSequence(char * block){
   }
 }
 
+/* ==== runRedir ===========
+   Arguments: accepts an array of char pointers (strings), one of which is either "<" or ">". 
+
+   Returns: an int indicating exit status
+
+   Handles command execution in the event redirection is required. It will redirect either STDIN or STDOUT to the desired file as necessary, then fork and execute the given command. 
+
+   ========================*/
 
 int runRedir(char ** args){
   int i = hasRedir(args);
@@ -66,6 +92,14 @@ int runRedir(char ** args){
   return 0;
 }
 
+/* ==== runPipe ===========
+   Arguments: accepts a char pointer (string) containing at least one pipe.
+
+   Returns: an int indicating exit status
+
+   Accepts command line input in the form of a stirng, and handles execution in the event piping is required. It splits on the pipe, then use popen to read the output of the first command and write the resulting buffer to the second.
+ 
+   ========================*/
 
 int runPipe(char * command){
   FILE * fp_r;
@@ -87,6 +121,16 @@ int runPipe(char * command){
   return 0;
 }
 
+/* ==== hasRedir ===========
+   Arguments: accepts an array of char pointers (strings)
+
+   Returns: the array index at which the first instance of ">" or "<" was found. If none exists, returns 0.
+
+   Checks whether the given array of command line arguments contains at least one redirection, and returns the index of the first instance. Returns 0 if none is found.
+ 
+   ========================*/
+
+
 int hasRedir(char ** s){
   int i;
   for(i = 0; s[i]; i++){
@@ -96,6 +140,15 @@ int hasRedir(char ** s){
   }
   return 0;
 }
+
+/* ==== forkRun ===========
+   Arguments: accepts an array of char pointers (strings)
+
+   Returns: an int indicating exit status
+
+   Will fork, and then execute the given array of commands using execvp within the child process.
+ 
+   ========================*/
 
 int forkRun(char ** args){
 
@@ -107,6 +160,7 @@ int forkRun(char ** args){
   }
   else { // forked child process
     execvp(args[0], args);
+    free(args);
     exit(0);
   }
 

@@ -5,6 +5,15 @@
 #include "parse.h"
 #include "command.h"
 
+/* ==== parseCommand ========
+   Arguments: accepts a char pointer (string) 
+
+   Returns: an array of char pointers which can be passed as command line arguments
+
+   Counts the number of tokens within the string, then allocates the correct amount of memory. It then splits on the spaces between tokens, stripping execess spaces from the front and back of each token as it goes.
+ 
+   ========================*/
+
 char ** parseCommand(char * command){
   int i = 0;
   char space[] = " ";
@@ -22,6 +31,14 @@ char ** parseCommand(char * command){
   return args;
 }
 
+/* ==== countArgs ========
+   Arguments: accepts a char pointer (string) 
+
+   Returns: the number of tokens seperated by spaces within the given string
+
+   Returns the mimimum (oops!) number of tokens within the string.
+
+   ========================*/
 
 int countArgs(char * i){
   if (*i == '\n'){ // if the inputted string is null
@@ -36,6 +53,15 @@ int countArgs(char * i){
   return num_args;
 
 }
+
+/* ====== stripSpaces =======
+   Arguments: accepts a char pointer (string) 
+
+   Returns: a pointer to the same string, with all preceding or terminating whitespace having been stripped. It also removes the final newline appended by fgets(), if present.
+
+   Increments the char pointer to the first instance of a char != ' ', effectively removing the preceding spaces. It then iterates from the back of the string, setting the last instance of ' ' to null, effectively truncating the string.
+
+   ========================*/
 
 char * stripSpaces(char * s){
   if (!s){
